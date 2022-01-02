@@ -25,7 +25,7 @@ public class gamemngrObj : MonoBehaviour
     {
         score++;
         ScoreText.text = score.ToString();
-        if (score==26)
+        if (score==20)
         {
             SceneManager.LoadScene(lvl);
         }
