@@ -10,6 +10,10 @@ public class gamemngrObj : MonoBehaviour
     public GameObject mainCnvs;
     public GameObject goCnvs;
     private Health health;
+    public Text timerText;
+    private float secondsCount;
+    private int minuteCount;
+    private int hourCount;
     public enum GameStates
     {
         Playing,
@@ -19,7 +23,7 @@ public class gamemngrObj : MonoBehaviour
 
     int score = 0;
     public Text ScoreText;
-    public string lvl;
+    public string level;
 
     public void AddScore()
     {
@@ -27,9 +31,32 @@ public class gamemngrObj : MonoBehaviour
         ScoreText.text = score.ToString();
         if (score==20)
         {
-            SceneManager.LoadScene(lvl);
+            SceneManager.LoadScene(level);
         }
     }
+
+    public void UpdateTimerUI()
+    {
+        //set timer UI
+        secondsCount += Time.deltaTime;
+        timerText.text = hourCount + ":" + minuteCount + ":" + (int)secondsCount ;
+        if (secondsCount == 10)
+        {
+            ScoreText.text = "0000000000000000000";
+            //SceneManager.LoadScene(level);
+        }
+        else if (secondsCount >= 60)
+        {
+            minuteCount++;
+            secondsCount = 0;
+        }
+        else if (minuteCount >= 60)
+        {
+            hourCount++;
+            minuteCount = 0;
+        }
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,21 +71,21 @@ public class gamemngrObj : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       /* switch (gameState)
-        {
-            case GameStates.Playing:
-                if (!health.isAlive)
-                {
-                    gameState = GameStates.Gameover;
-                    mainCnvs.SetActive(false);
-                    goCnvs.SetActive(true);
-                }
-                break;
-            case GameStates.Gameover:
-                break;
-            default:
-                break;
-        }*/
-
+        /* switch (gameState)
+         {
+             case GameStates.Playing:
+                 if (!health.isAlive)
+                 {
+                     gameState = GameStates.Gameover;
+                     mainCnvs.SetActive(false);
+                     goCnvs.SetActive(true);
+                 }
+                 break;
+             case GameStates.Gameover:
+                 break;
+             default:
+                 break;
+         }*/
+        UpdateTimerUI();
     }
 }
